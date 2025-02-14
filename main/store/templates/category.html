@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>category page</title>
+    <style>
+        .banner-container {
+            position: relative;
+            text-align: center;
+            color: white;
+        }
+        .banner-image {
+            filter: brightness(0.4);
+            max-height: 350px;
+            min-height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+        .banner-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .about-title{
+            font-weight: 700;
+            font-size: 70px;
+        }
+        @media (max-width: 1100px) {
+            .about-title {
+                font-size: 65px;
+            }
+        }
+        @media (max-width: 1024px) {
+            .about-title {
+                font-size: 58px;
+            }
+        }
+        @media (max-width: 910px) {
+            .about-title {
+                font-size: 50px;
+            }
+        }
+        @media (max-width: 650px) {
+            .about-title {
+                font-size: 40px;
+            }
+        }
+        @media (max-width: 500px) {
+            .about-title {
+                font-size: 30px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+     <!-- header -->
+<div class="banner-container">
+    <!-- Background Image with Dark Filter -->
+    <img src="{% static 'assets/category-banner.jpg' %}" alt="" class="banner-image">
+    
+    <!-- Overlay Text Positioned at the Top -->
+    <div class="banner-text" >
+        <h1 class="about-title">{{ category }}</h1>
+    </div>
+</div>
+
+        <!-- Section-->
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    
+                    
+                    {% for product in products %}
+                        {% if product.is_sale %}
+                            <div class="col mb-5">
+                                <div class="card h-100">
+                                    <!-- sales badge -->
+                                     <div class="badge bg-dark text-white position-absolute"
+                                      style="top: 0.5rem; right: 0.5rem;">
+                                        Sale
+                                     </div>
+                                    <!-- Product image-->
+                                    <img class="card-img-top" src="{{ product.image.url}}" alt="..." />
+                                    <!-- Product details-->
+                                    <div class="card-body p-4">
+                                        <div class="text-center">
+                                            <!-- Product name-->
+                                            <h5 class="fw-bolder">{{ product.name }}</h5>
+                                            <!-- Product price-->
+                                            <strike>${{ product.price }}</strike> - ${{ product.sale_price }}
+                                        </div>
+                                    </div>
+                                    <!-- Product actions-->
+<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+<div class="text-center"><a class="btn btn-outline-dark mt-auto"
+     href="{% url 'product' product.id %}">View Product</a></div>
+</div>
+                                </div>
+                            </div>
+
+                        {% else %}
+                            <div class="col mb-5">
+                                <div class="card h-100">
+                                    <!-- Product image-->
+                                    <img class="card-img-top" src="{{ product.image.url}}" alt="..." />
+                                    <!-- Product details-->
+                                    <div class="card-body p-4">
+                                        <div class="text-center">
+                                            <!-- Product name-->
+                                            <h5 class="fw-bolder">{{ product.name }}</h5>
+                                            <!-- Product price-->
+                                            ${{ product.price }}
+                                        </div>
+                                    </div>
+                                    <!-- Product actions-->
+<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+<div class="text-center"><a class="btn btn-outline-dark mt-auto" 
+    href="{% url 'product' product.id %}">View Product</a></div>
+</div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+
+                    
+                </div>
+            </div>
+        </section>
+</body>
+</html>
+{% endblock %}
+        

@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login page</title>
+    <style>
+        .banner-container {
+            position: relative;
+            text-align: center;
+            color: white;
+        }
+        .banner-image {
+            filter: brightness(0.4);
+            max-height: 350px;
+            min-height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+        .banner-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .about-title{
+            font-weight: 700;
+            font-size: 70px;
+        }
+        label{
+            float: left;
+        }
+        @media (max-width: 1100px) {
+            .about-title {
+                font-size: 65px;
+            }
+        }
+        @media (max-width: 1024px) {
+            .about-title {
+                font-size: 58px;
+            }
+        }
+        @media (max-width: 910px) {
+            .about-title {
+                font-size: 50px;
+            }
+        }
+        @media (max-width: 650px) {
+            .about-title {
+                font-size: 40px;
+            }
+        }
+        @media (max-width: 500px) {
+            .about-title {
+                font-size: 30px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- header -->
+<div class="banner-container">
+    <!-- Background Image with Dark Filter -->
+    <img src="{% static 'assets/login-banner.webp' %}" alt="" class="banner-image">
+    
+    <!-- Overlay Text Positioned at the Top -->
+    <div class="banner-text">
+        <h1 class="about-title">LOGIN PAGE</h1>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <center>
+            <div class="col-8">
+
+                <br><br>
+<form method="POST" action="{% url 'register' %}">
+    {% csrf_token %}
+    
+    <form>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">User Name</label>
+          <input type="text" class="form-control" id="exampleInputEmail1" name="username">
+          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>
+        <button type="submit" class="btn btn-secondary">Submit</button>
+      </form>
+    </form>
+
+    <br><br>
+    <br><br>
+    <br><br>
+  
+            </div>
+        </center>
+    </div>
+</div>
+
+
+</body>
+</html>
+  
+  {% endblock %}

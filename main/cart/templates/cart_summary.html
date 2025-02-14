@@ -1,0 +1,223 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart Page</title>
+    <style>
+      .banner-container {
+          position: relative;
+          text-align: center;
+          color: white;
+      }
+      .banner-image {
+          filter: brightness(0.4);
+          max-height: 350px;
+          min-height: 200px;
+          object-fit: cover;
+          width: 100%;
+      }
+      .banner-text {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-family: Arial, Helvetica, sans-serif;
+      }
+      .about-title{
+          font-weight: 700;
+          font-size: 70px;
+      }
+      @media (max-width: 1100px) {
+          .about-title {
+              font-size: 65px;
+          }
+      }
+      @media (max-width: 1024px) {
+          .about-title {
+              font-size: 58px;
+          }
+      }
+      @media (max-width: 910px) {
+          .about-title {
+              font-size: 50px;
+          }
+      }
+      @media (max-width: 650px) {
+          .about-title {
+              font-size: 40px;
+          }
+      }
+      @media (max-width: 500px) {
+          .about-title {
+              font-size: 30px;
+          }
+      }
+      
+  </style>
+  </head>
+  <body>
+    <!-- header -->
+    <div class="banner-container">
+      <!-- Background Image with Dark Filter -->
+      <img src="{% static 'assets/cart-banner.jpg' %}" alt="" class="banner-image" />
+
+      <!-- Overlay Text Positioned at the Top -->
+      <div class="banner-text">
+        <h1 class="about-title">Cart Page</h1>
+      </div>
+    </div>
+    <div class="container" style=" padding: 80px;">
+      {% if cart_products %}
+      {% for product in cart_products %}
+      <div class="card mb-3">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="...">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <p class="card-text">{{ product.description }}</p>
+
+              {% if product.is_sale %}
+
+                <!-- sales badge -->
+                <div class="badge bg-dark text-white position-absolute"
+                style="top: 0.5rem; right: 0.5rem;">
+                    Sale
+                </div>
+                <!-- Product price-->
+                <strike>${{ product.price }}</strike> - ${{ product.sale_price }}
+
+              {% else %}
+                    ${{ product.price }}
+                    <br>
+                    
+
+              {% endif %}
+
+              <br>
+                <div class="row justify-content-center" >
+                  <div class="col-md-2">Quantity</div>
+                  <div class="col-md-2">
+              <select class="form-select form-select-sm"
+              id="select{{product.id}}">
+
+                  {% for key, value in quantities.items %}
+                    {% if key == product.id|slugify %}
+
+                    <option selected>{{ value }}</option> 
+
+                    {% endif %}
+
+                  {% endfor %}
+
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+                </div>
+                </div>
+              <br>
+              <center>
+              <a href="{% url 'home' %}"
+              ><button type="button" class="btn btn-secondary">
+                Home
+              </button></a>
+
+              <button type="button" data-index="{{product.id}}"
+              class="btn btn-secondary update-cart" >Update</button>
+
+              <button type="button" data-index="{{product.id}}"
+              class="btn btn-danger delete-product" >Remove</button>
+            </center>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      <br><br>
+      <h3>Total: ${{ totals }}</h3>
+      {% else %}
+      <div class="container" style="display: flex; justify-content: center; align-items: center;">
+        <p>There's Nothing In Your Cart....</p>
+      </div>
+      <br /><br /><br />
+      
+      {% endif %}
+    </div>
+    <br />
+    <br /><br /><br />
+   
+    <script>
+      //UPDATE CART------------------------------------------
+      // check if button pressed
+      $(document).on("click", ".update-cart", function (e) {
+        e.preventDefault();
+        //grab a product id
+        var productid = $(this).data('index');
+        
+        $.ajax({
+          type: "POST",
+          url: "{% url 'cart_update' %}",
+          data: {
+            product_id: productid,
+            product_qty: $('#select' + productid + ' option:selected').text(),
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+            action: "post",
+          },
+ 
+          success: function(json) {
+            // Update the cart quantity in the navbar
+            //document.getElementById("cart_quantity").textContent = json.Qty;
+            location.reload();
+          },
+
+          error: function (xhr, errmsg, err) {
+            //console.log(xhr.status + ": " + xhr.responseText);
+          },
+        });
+      });
+
+
+
+//DELETE CART ITEM------------------------------------------------
+
+      $(document).on("click", ".delete-product", function (e) {
+        e.preventDefault();
+        //grab a product id
+        //var productid = $(this).data('index');
+        
+        $.ajax({
+          type: "POST",
+          url: "{% url 'cart_delete' %}",
+          data: {
+            product_id: $(this).data('index'),
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+            action: "post",
+          },
+ 
+          success: function(json) {
+            // Update the cart quantity in the navbar
+            //document.getElementById("cart_quantity").textContent = json.Qty;
+            location.reload();
+          },
+
+          error: function (xhr, errmsg, err) {
+            //console.log(xhr.status + ": " + xhr.responseText);
+          },
+        });
+      });
+    </script>
+  
+  </body>
+</html>
+
+{% endblock %}

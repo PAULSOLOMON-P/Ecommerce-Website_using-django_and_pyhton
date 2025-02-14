@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>about-page</title>
+    <style>
+        .banner-container {
+            position: relative;
+            text-align: center;
+            color: white;
+        }
+        .banner-image {
+            filter: brightness(0.4);
+            max-height: 350px;
+            min-height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+        .banner-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .about-title{
+            font-weight: 700;
+            font-size: 70px;
+        }
+        @media (max-width: 1100px) {
+            .about-title {
+                font-size: 65px;
+            }
+        }
+        @media (max-width: 1024px) {
+            .about-title {
+                font-size: 58px;
+            }
+        }
+        @media (max-width: 910px) {
+            .about-title {
+                font-size: 50px;
+            }
+        }
+        @media (max-width: 650px) {
+            .about-title {
+                font-size: 40px;
+            }
+        }
+        @media (max-width: 500px) {
+            .about-title {
+                font-size: 30px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- header -->
+    <div class="banner-container">
+        <!-- Background Image with Dark Filter -->
+        <img src="{% static 'assets/about-banner.webp' %}" alt="" class="banner-image">
+        
+        <!-- Overlay Text Positioned at the Center -->
+        <div class="banner-text">
+            <h1 class="about-title">About Us</h1>
+        </div>
+    </div>
+
+    <br>
+    <div class="container" style="padding-top: 20px;">
+        <div class="row">
+            <h1 style="padding-bottom: 20px;">About us:</h1>
+            <div>
+                <p> Welcome to Adidas-online store, where sports, innovation, and style come together to create the perfect fusion of performance and fashion. We are not just a brand; we are a movement dedicated to empowering athletes, fitness enthusiasts, and trendsetters worldwide.</p>
+                <br>
+                <p>At Adidas-online store, we believe that sportswear should do more than just look good—it should inspire confidence, enhance performance, and support every step of your journey. Whether you’re an elite athlete pushing your limits, a fitness lover striving for progress, or someone who enjoys street-style fashion, we have something for you.</p>
+                <br>
+                <h2>Designed for Performance & Comfort</h2>
+                <p>Our products are crafted using cutting-edge technology and premium materials to provide superior comfort, durability, and style. From breathable fabrics and moisture-wicking technology to responsive footwear that adapts to your movements, every detail is designed to help you perform at your best.</p>
+                <br><br>
+                <h2>Fashion Meets Functionality</h2>
+                <p>We understand that sportswear is more than just gear—it’s a lifestyle. That’s why our collections blend high-performance functionality with modern, street-ready designs. Whether you’re in the gym, on the track, or out in the city, our apparel and footwear are designed to keep up with your active lifestyle.</p>
+                <br><br>
+                <h2>Commitment to Sustainability</h2>
+                <p>We are committed to creating a better future by incorporating sustainable materials and eco-friendly practices into our production process. By choosing Adidas-online store, you’re not just investing in high-quality sportswear—you’re also contributing to a healthier planet.</p>
+                <br><br>
+                <h2>Join the Movement</h2>
+                <p>At Adidas-online store, we celebrate individuality, perseverance, and the relentless pursuit of greatness. Our mission is to inspire and equip you with the best gear to help you reach new heights.</p>
+                <br><br>
+                <p>Are you ready to elevate your game? Step into the future with Adidas-online store.</p>
+            </div>
+        </div>
+    </div>
+    <br><br><br>
+</body>
+</html>
+
+{% endblock %}

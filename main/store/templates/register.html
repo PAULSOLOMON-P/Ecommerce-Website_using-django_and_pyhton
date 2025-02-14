@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register page</title>
+    <style>
+        .banner-container {
+            position: relative;
+            text-align: center;
+            color: white;
+        }
+        .banner-image {
+            filter: brightness(0.4);
+            max-height: 350px;
+            min-height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+        .banner-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .about-title{
+            font-weight: 700;
+            font-size: 70px;
+        }
+        @media (max-width: 1100px) {
+            .about-title {
+                font-size: 65px;
+            }
+        }
+        @media (max-width: 1024px) {
+            .about-title {
+                font-size: 58px;
+            }
+        }
+        @media (max-width: 910px) {
+            .about-title {
+                font-size: 50px;
+            }
+        }
+        @media (max-width: 650px) {
+            .about-title {
+                font-size: 40px;
+            }
+        }
+        @media (max-width: 500px) {
+            .about-title {
+                font-size: 30px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- header -->
+<div class="banner-container">
+    <!-- Background Image with Dark Filter -->
+    <img src="{% static 'assets/register-banner.jpg' %}" alt="" class="banner-image">
+    
+    <!-- Overlay Text Positioned at the Top -->
+    <div class="banner-text">
+        <h1 class="about-title">REGISTER</h1>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+            <div class="col-md-6 offset-md-3">
+
+                <br><br>
+<form method="POST" action="{% url 'register' %}">
+    {% csrf_token %}
+    
+    {{ form.as_p }}
+    <br><br>
+    <button type="submit" class="btn btn-secondary">
+        Register
+    </button>
+    </form>
+
+    <br><br>
+    <br><br>
+    <br><br>
+  
+            </div>
+       
+    </div>
+</div>
+
+
+</body>
+</html>
+  
+  {% endblock %}
